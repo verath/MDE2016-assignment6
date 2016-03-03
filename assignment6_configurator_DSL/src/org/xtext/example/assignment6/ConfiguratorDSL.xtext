@@ -1,0 +1,111 @@
+grammar org.xtext.example.assignment6.ConfiguratorDSL with org.eclipse.xtext.common.Terminals
+
+import "platform:/resource/assignment6_model/model/assignment6_model.ecore" 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+Configurator returns Configurator:
+	{Configurator}
+	'Configurator'
+	name=EString
+	'{'
+		('features' '{' features+=Feature ( "," features+=Feature)* '}' )?
+		('groups' '{' groups+=Group ( "," groups+=Group)* '}' )?
+	'}';
+
+Feature returns Feature:
+	SimpleFeature | IntegerFeature;
+
+EString returns ecore::EString:
+	STRING | ID;
+
+Group returns Group:
+	(groupType=GroupType)
+	name=EString
+	'{'
+		features+=SimpleFeature ( "," features+=SimpleFeature)*
+	'}';
+
+EBoolean returns ecore::EBoolean:
+	'true' | 'false';
+
+SimpleFeature returns SimpleFeature:
+	{SimpleFeature}
+	(mandatory?='mandatory')?
+	'Feature'
+	name=EString
+	'{'
+		('dependencies' '{' dependencies+=Dependency ( "," dependencies+=Dependency)* '}' )?
+		('features' '{' features+=Feature ( "," features+=Feature)* '}' )?
+		('groups' '{' groups+=Group ( "," groups+=Group)* '}' )?
+	'}';
+
+IntegerFeature returns IntegerFeature:
+	{IntegerFeature}
+	(mandatory?='mandatory')?
+	'Feature'
+	name=EString
+	'{'
+		('minValue' minValue=EInt)
+		('maxValue' maxValue=EInt)
+		('step' step=EInt)
+		('dependencies' '{' dependencies+=Dependency ( "," dependencies+=Dependency)* '}' )?
+		('features' '{' features+=Feature ( "," features+=Feature)* '}' )?
+		('groups' '{' groups+=Group ( "," groups+=Group)* '}' )?
+	'}'
+;
+
+//Value 10 -> 20 : 2
+	
+	
+Dependency returns Dependency:
+	BaseBinaryDependency | IsSelectedDependency | IntegerValueDependency;	
+
+BaseBinaryDependency returns BinaryDependency:
+	BinaryNotDependency | BinaryDependency
+;
+
+BinaryNotDependency returns BinaryDependency:
+	'('
+	not?='NOT'
+		'('
+			leftHand=Dependency
+			operator=BinaryOperator
+			rightHand=Dependency
+		')'
+	')'
+;
+
+BinaryDependency returns BinaryDependency:
+	'('
+		leftHand=Dependency
+		operator=BinaryOperator
+		rightHand=Dependency
+	')'
+;
+
+IsSelectedDependency returns IsSelectedDependency:
+	'('
+		target=[Feature|EString]
+		'IS'
+		(not?='NOT')?
+		'SELECTED'
+	')'
+	;
+	
+IntegerValueDependency returns IntegerValueDependency:
+	'('
+	target=[IntegerFeature|EString]
+	'IS'
+	(not?='NOT')?
+	value=EInt
+	')';
+
+enum BinaryOperator returns BinaryOperator:
+				AND = 'AND' | OR = 'OR';
+				
+
+EInt returns ecore::EInt:
+	'-'? INT;
+
+enum GroupType returns GroupType:
+				OR = 'Inclusive Group' | XOR = 'Exclusive Group';
