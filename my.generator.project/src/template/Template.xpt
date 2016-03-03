@@ -1,0 +1,146 @@
+«IMPORT assignment6_model»
+
+«EXTENSION template::GeneratorExtensions»
+
+«DEFINE main FOR Configurator»
+«FILE name + '.html'»
+
+
+
+<head>
+	<title>«name»</title>
+</head>
+
+
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+ <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  
+
+<style>
+  #tab {
+    margin-left: 30px;
+  }
+</style>
+<script>
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+$(function() {
+    $('form').submit(function() {
+        var txt = JSON.stringify($('form').serializeObject());
+        $('#result').text(txt, null, 4);
+        var recipe =  window.open('','RecipeWindow','width=600,height=600');
+        var html = '<html><head><title>Result Window</title></head><body><div>' + txt + '</div></body></html>';
+    recipe.document.open();
+    recipe.document.write(html);
+    recipe.document.close();
+        return false;
+    });
+})
+
+</script>
+
+
+
+«REM»Content:«ENDREM»
+
+<h1>Configurator «name» </h1>
+
+<form id=configurator>
+
+
+<div id=tab>
+«EXPAND feature(name) FOREACH features»
+</div>
+
+<div id=tab>
+«EXPAND group FOREACH groups»
+</div>
+
+<input type="submit" title="Send">
+
+</form>
+
+
+
+
+«ENDFILE»
+
+
+«ENDDEFINE»
+
+
+«DEFINE group FOR Group»
+	«this.name»:
+	<div id=tab>
+	«IF this.groupType.toString() == 'XOR'»
+		«FOREACH this.features AS feature»
+			<p>«feature.name»: <input type=radio name=«this.name» id=«feature.name» value=«feature.name» «IF feature.mandatory» checked=checked «ENDIF»></p>
+			«EXPAND group FOREACH feature.groups»
+			<div id=tab>
+			«EXPAND feature(feature.name) FOREACH feature.features»
+			</div>	
+		«ENDFOREACH»
+		
+		«ELSE»
+		«FOREACH this.features AS feature»
+			<p>«feature.name»: <input type=checkbox name=«this.name» id=«feature.name» value=«feature.name» «IF feature.mandatory» checked=checked «ENDIF»></p>
+			«EXPAND group FOREACH feature.groups»
+			<div id=tab>
+			«EXPAND feature(feature.name) FOREACH feature.features»
+			</div>
+		«ENDFOREACH»
+	«ENDIF»
+	</div>
+«ENDDEFINE»
+
+
+
+«DEFINE feature(String parent) FOR Feature»
+«ERROR "Should not happen"»
+«ENDDEFINE»
+
+«REM»Simple Feature:«ENDREM»
+«DEFINE feature(String parent) FOR SimpleFeature»
+	
+	<p>«this.name»: <input type=checkbox name=«parent» id=«this.name» value=«this.name» «IF this.mandatory»  checked=checked «ENDIF»></p>
+
+
+	<div id=tab>
+	«EXPAND group FOREACH this.groups»
+	</div>
+	<div id=tab>
+	«EXPAND feature(this.name) FOREACH this.features»
+	</div>
+	
+«ENDDEFINE»
+
+«REM»Integer Feature«ENDREM»
+«DEFINE feature(String parent) FOR IntegerFeature»
+
+	<p>«this.name»: <input type=range name=«parent» id=«this.name» value=«this.name» max=«this.maxValue» min=«this.minValue» step=«this.step»>
+
+	<div id=tab>
+	«EXPAND group FOREACH this.groups»
+	</div>
+	<div id=tab>
+	«EXPAND feature(this.name) FOREACH this.features»
+	</div>
+
+«ENDDEFINE»
+
+
+

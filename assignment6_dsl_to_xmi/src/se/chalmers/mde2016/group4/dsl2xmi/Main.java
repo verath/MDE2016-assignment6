@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.xtext.example.assignment6.ConfiguratorDSLStandaloneSetup;
@@ -22,6 +23,36 @@ import com.google.inject.Injector;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+		/*Marcus Solution:
+		 
+		//Injector injector = new GaCodeModelStandaloneSetup().createInjectorAndDoEMFRegistration();
+		Injector injector = new ConfiguratorDSLStandaloneSetup().createInjectorAndDoEMFRegistration();
+		
+		Assignment6_modelPackage.eINSTANCE.eClass();
+
+		XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+
+		URI uri = URI.createURI("files/test.configuratordsl");
+		//Resource xtextResource = resourceSet.createResource(uri);
+		Resource xtextResource = resourceSet.getResource(uri, true);
+
+		EcoreUtil.resolveAll(xtextResource);
+
+		Resource xmiResource = resourceSet.createResource(URI.createURI("files/test.xmi"));
+		EObject a = xtextResource.getContents().get(0);
+		xmiResource.getContents().add(a);
+		try {
+			xmiResource.save(null);
+			//xmiResource.save(new FileOutputStream("files/test2.xmi"),null);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("ERROR!");
+		}
+		 
+		 * */
+		
+		
+		
 		// Register our model package
 		Assignment6_modelPackage.eINSTANCE.eClass();
 

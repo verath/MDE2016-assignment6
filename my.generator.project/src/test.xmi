@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ASCII"?>
+<assignment6_model:Configurator xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:assignment6_model="http://www.example.org/assignment6_model" name="Volvo V70">
+  <features xsi:type="assignment6_model:SimpleFeature" name="Engine" mandatory="true">
+    <features xsi:type="assignment6_model:SimpleFeature" name="Polestar Performance"/>
+    <groups name="Motor" groupType="XOR">
+      <features name="Disel">
+        <groups name="zxc" groupType="XOR">
+          <features name="D3 (150HP)"/>
+          <features name="D4 (181HP)"/>
+          <features name="D4 AWD (181HP)"/>
+        </groups>
+      </features>
+      <features name="Gas">
+        <features xsi:type="assignment6_model:SimpleFeature" name="T4 (190HP)" mandatory="true"/>
+      </features>
+      <features name="Alternative Options">
+        <features xsi:type="assignment6_model:SimpleFeature" name="Bi-Fuel (245HP)" mandatory="true"/>
+      </features>
+    </groups>
+    <groups name="Transmission" groupType="XOR">
+      <features name="Six geard manual transmission">
+        <dependencies xsi:type="assignment6_model:BinaryDependency" operator="OR">
+          <rightHand xsi:type="assignment6_model:IsSelectedDependency" target="//@features.0/@groups.0/@features.1/@features.0"/>
+          <leftHand xsi:type="assignment6_model:BinaryDependency" operator="OR">
+            <rightHand xsi:type="assignment6_model:IsSelectedDependency" target="//@features.0/@groups.0/@features.0/@groups.0/@features.1"/>
+            <leftHand xsi:type="assignment6_model:IsSelectedDependency" target="//@features.0/@groups.0/@features.0/@groups.0/@features.0"/>
+          </leftHand>
+        </dependencies>
+      </features>
+      <features name="Six geard Geartronic automatic transmission">
+        <dependencies xsi:type="assignment6_model:BinaryDependency" operator="OR">
+          <rightHand xsi:type="assignment6_model:IsSelectedDependency" target="//@features.0/@groups.0/@features.1/@features.0"/>
+          <leftHand xsi:type="assignment6_model:BinaryDependency" operator="OR">
+            <rightHand xsi:type="assignment6_model:IsSelectedDependency" target="//@features.0/@groups.0/@features.0/@groups.0/@features.2"/>
+            <leftHand xsi:type="assignment6_model:IsSelectedDependency" target="//@features.0/@groups.0/@features.0/@groups.0/@features.0"/>
+          </leftHand>
+        </dependencies>
+      </features>
+      <features name="Eight geard Automatic">
+        <dependencies xsi:type="assignment6_model:BinaryDependency" operator="OR">
+          <rightHand xsi:type="assignment6_model:IsSelectedDependency" target="//@features.0/@groups.0/@features.2/@features.0"/>
+          <leftHand xsi:type="assignment6_model:IsSelectedDependency" target="//@features.0/@groups.0/@features.0/@groups.0/@features.1"/>
+        </dependencies>
+      </features>
+    </groups>
+  </features>
+  <features xsi:type="assignment6_model:SimpleFeature" name="Equipment">
+    <features xsi:type="assignment6_model:SimpleFeature" name="Technical package pro"/>
+    <groups name="Equipment Level" groupType="XOR">
+      <features name="Classic momentum"/>
+      <features name="Classic summum"/>
+      <features name="Classic Sport"/>
+      <features name="Classic kinetic"/>
+    </groups>
+  </features>
+  <features xsi:type="assignment6_model:IntegerFeature" name="HORSEPOWAH!" minValue="100" maxValue="1000" step="100"/>
+</assignment6_model:Configurator>

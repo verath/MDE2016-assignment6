@@ -1,0 +1,267 @@
+
+
+
+
+<head>
+	<title>Volvo V70</title>
+</head>
+
+
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+ <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  
+
+<style>
+  #tab {
+    margin-left: 30px;
+  }
+</style>
+<script>
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+$(function() {
+    $('form').submit(function() {
+        var txt = JSON.stringify($('form').serializeObject());
+        $('#result').text(txt, null, 4);
+        var recipe =  window.open('','RecipeWindow','width=600,height=600');
+        var html = '<html><head><title>Result Window</title></head><body><div>' + txt + '</div></body></html>';
+    recipe.document.open();
+    recipe.document.write(html);
+    recipe.document.close();
+        return false;
+    });
+})
+
+</script>
+
+
+
+
+
+<h1>Configurator Volvo V70 </h1>
+
+<form id=configurator>
+
+
+<div id=tab>
+
+	
+	<p>Engine: <input type=checkbox name=Volvo V70 id=Engine value=Engine   checked=checked ></p>
+
+
+	<div id=tab>
+	
+	Motor:
+	<div id=tab>
+	
+		
+			<p>Disel: <input type=radio name=Motor id=Disel value=Disel ></p>
+			
+	zxc:
+	<div id=tab>
+	
+		
+			<p>D3 (150HP): <input type=radio name=zxc id=D3 (150HP) value=D3 (150HP) ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+			<p>D4 (181HP): <input type=radio name=zxc id=D4 (181HP) value=D4 (181HP) ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+			<p>D4 AWD (181HP): <input type=radio name=zxc id=D4 AWD (181HP) value=D4 AWD (181HP) ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+		
+		
+	</div>
+
+			<div id=tab>
+			
+			</div>	
+		
+			<p>Gas: <input type=radio name=Motor id=Gas value=Gas ></p>
+			
+			<div id=tab>
+			
+	
+	<p>T4 (190HP): <input type=checkbox name=Gas id=T4 (190HP) value=T4 (190HP)   checked=checked ></p>
+
+
+	<div id=tab>
+	
+	</div>
+	<div id=tab>
+	
+	</div>
+	
+
+			</div>	
+		
+			<p>Alternative Options: <input type=radio name=Motor id=Alternative Options value=Alternative Options ></p>
+			
+			<div id=tab>
+			
+	
+	<p>Bi-Fuel (245HP): <input type=checkbox name=Alternative Options id=Bi-Fuel (245HP) value=Bi-Fuel (245HP)   checked=checked ></p>
+
+
+	<div id=tab>
+	
+	</div>
+	<div id=tab>
+	
+	</div>
+	
+
+			</div>	
+		
+		
+		
+	</div>
+
+	Transmission:
+	<div id=tab>
+	
+		
+			<p>Six geard manual transmission: <input type=radio name=Transmission id=Six geard manual transmission value=Six geard manual transmission ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+			<p>Six geard Geartronic automatic transmission: <input type=radio name=Transmission id=Six geard Geartronic automatic transmission value=Six geard Geartronic automatic transmission ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+			<p>Eight geard Automatic: <input type=radio name=Transmission id=Eight geard Automatic value=Eight geard Automatic ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+		
+		
+	</div>
+
+	</div>
+	<div id=tab>
+	
+	
+	<p>Polestar Performance: <input type=checkbox name=Engine id=Polestar Performance value=Polestar Performance ></p>
+
+
+	<div id=tab>
+	
+	</div>
+	<div id=tab>
+	
+	</div>
+	
+
+	</div>
+	
+
+	
+	<p>Equipment: <input type=checkbox name=Volvo V70 id=Equipment value=Equipment ></p>
+
+
+	<div id=tab>
+	
+	Equipment Level:
+	<div id=tab>
+	
+		
+			<p>Classic momentum: <input type=radio name=Equipment Level id=Classic momentum value=Classic momentum ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+			<p>Classic summum: <input type=radio name=Equipment Level id=Classic summum value=Classic summum ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+			<p>Classic Sport: <input type=radio name=Equipment Level id=Classic Sport value=Classic Sport ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+			<p>Classic kinetic: <input type=radio name=Equipment Level id=Classic kinetic value=Classic kinetic ></p>
+			
+			<div id=tab>
+			
+			</div>	
+		
+		
+		
+	</div>
+
+	</div>
+	<div id=tab>
+	
+	
+	<p>Technical package pro: <input type=checkbox name=Equipment id=Technical package pro value=Technical package pro ></p>
+
+
+	<div id=tab>
+	
+	</div>
+	<div id=tab>
+	
+	</div>
+	
+
+	</div>
+	
+
+
+	<p>HORSEPOWAH!: <input type=range name=Volvo V70 id=HORSEPOWAH! value=HORSEPOWAH! max=1000 min=100 step=100>
+
+	<div id=tab>
+	
+	</div>
+	<div id=tab>
+	
+	</div>
+
+
+</div>
+
+<div id=tab>
+
+</div>
+
+<input type="submit" title="Send">
+
+</form>
+
+
+
+

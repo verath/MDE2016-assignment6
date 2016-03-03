@@ -1,0 +1,81 @@
+Configurator 'Volvo V70' {
+	features {
+		mandatory Feature Engine {
+			features {
+				Feature 'Polestar Performance' {
+					/*
+					dependencies {
+						(("D4 (181HP)" IS SELECTED) OR ("D4 AWD (181HP)" IS SELECTED))
+					}
+					*/
+				}
+			}
+ 
+			
+			groups {
+				Exclusive Group Motor{
+					
+					
+						Feature Disel {
+							groups
+							 {
+							 	
+								Exclusive Group zxc {
+										Feature 'D3 (150HP)' {},
+										Feature 'D4 (181HP)' {},
+										Feature 'D4 AWD (181HP)' {}
+									
+								}
+							}
+						},
+						Feature Gas {
+							features {
+								mandatory Feature 'T4 (190HP)' {}
+							}
+						},
+						Feature 'Alternative Options' {
+							features {
+								mandatory Feature 'Bi-Fuel (245HP)' {}
+							}
+					
+						}
+					
+				},
+				Exclusive Group Transmission {
+					Feature 'Six geard manual transmission' {
+						dependencies {
+							 ((("D3 (150HP)" IS SELECTED) OR ("D4 (181HP)" IS SELECTED)) OR ("T4 (190HP)" IS SELECTED))	 
+						}
+					},
+					Feature 'Six geard Geartronic automatic transmission' {
+						dependencies {
+							((("D3 (150HP)" IS SELECTED) OR ("D4 AWD (181HP)" IS SELECTED)) OR ("T4 (190HP)" IS SELECTED))
+						}
+					},
+					Feature 'Eight geard Automatic' {
+						dependencies {
+							(("D4 (181HP)" IS SELECTED) OR ("Bi-Fuel (245HP)" IS SELECTED))
+						}
+					}
+				}
+			}
+		},
+		Feature 'Equipment' {
+			features {
+				Feature 'Technical package pro'{}
+			}
+			groups {
+				Exclusive Group 'Equipment Level'{
+					Feature 'Classic momentum' {},
+					Feature 'Classic summum' {},
+					Feature 'Classic Sport' {},
+					Feature 'Classic kinetic' {
+						//D3
+					}
+				}
+			}	
+		}
+	}
+}
+		
+	
