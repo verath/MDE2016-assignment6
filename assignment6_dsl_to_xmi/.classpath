@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/assignment6_configurator_DSL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/assignment6_model"/>
+	<classpathentry kind="lib" path="/vendor/emf-2.11.1/org.eclipse.emf.common_2.11.0.v20150805-0538.jar"/>
+	<classpathentry kind="lib" path="/vendor/emf-2.11.1/org.eclipse.emf.ecore_2.11.1.v20150805-0538.jar"/>
+	<classpathentry kind="lib" path="/vendor/emf-2.11.1/org.eclipse.emf.ecore.xmi_2.11.1.v20150805-0538.jar"/>
+	<classpathentry kind="lib" path="/vendor/guice-3.0/guice-3.0.jar"/>
+	<classpathentry kind="lib" path="/vendor/xtext-2.8.4/org.eclipse.xtext_2.8.4.v201508050135.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
