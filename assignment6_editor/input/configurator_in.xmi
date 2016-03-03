@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assignment6_model:Configurator
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:assignment6_model="http://www.example.org/assignment6_model"
+    xsi:schemaLocation="http://www.example.org/assignment6_model ../../assignment6_model/model/assignment6_model.ecore"
+    name="Example1">
+  <features
+      xsi:type="assignment6_model:SimpleFeature"
+      name="Engine"
+      mandatory="true"
+      selected="true">
+    <groups
+        name="EngineType"
+        groupType="XOR">
+      <features
+          name="Electric"/>
+      <features
+          name="Gasoline"
+          selected="true"/>
+    </groups>
+  </features>
+  <features
+      xsi:type="assignment6_model:IntegerFeature"
+      name="NumWheels"
+      mandatory="true"
+      minValue="1"
+      maxValue="5"
+      step="2"
+      value="1"/>
+  <features
+      xsi:type="assignment6_model:SimpleFeature"
+      name="Sport">
+    <features
+        xsi:type="assignment6_model:SimpleFeature"
+        name="MoreSport">
+      <features
+          xsi:type="assignment6_model:SimpleFeature"
+          name="EvenMoreSport"/>
+    </features>
+  </features>
+  <features
+      xsi:type="assignment6_model:SimpleFeature"
+      name="Super">
+    <dependencies
+        xsi:type="assignment6_model:IsSelectedDependency"
+        target="//@features.2"/>
+  </features>
+</assignment6_model:Configurator>

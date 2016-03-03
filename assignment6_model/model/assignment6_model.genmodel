@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/assignment6_model/src" modelPluginID="assignment6_model"
+    modelName="Assignment6_model" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>assignment6_model.ecore</foreignModel>
+  <genPackages prefix="Assignment6_model" disposableProviderFactory="true" ecorePackage="assignment6_model.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="assignment6_model.ecore#//GroupType">
+      <genEnumLiterals ecoreEnumLiteral="assignment6_model.ecore#//GroupType/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="assignment6_model.ecore#//GroupType/XOR"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="assignment6_model.ecore#//BinaryOperator">
+      <genEnumLiterals ecoreEnumLiteral="assignment6_model.ecore#//BinaryOperator/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="assignment6_model.ecore#//BinaryOperator/OR"/>
+    </genEnums>
+    <genClasses ecoreClass="assignment6_model.ecore#//Configurator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//Configurator/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//Configurator/features"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//Configurator/groups"/>
+    </genClasses>
+    <genClasses ecoreClass="assignment6_model.ecore#//Feature">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//Feature/features"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//Feature/groups"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//Feature/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//Feature/dependencies"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//Feature/mandatory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//Feature/selected"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="assignment6_model.ecore#//SimpleFeature"/>
+    <genClasses ecoreClass="assignment6_model.ecore#//Group">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//Group/features"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//Group/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//Group/groupType"/>
+    </genClasses>
+    <genClasses ecoreClass="assignment6_model.ecore#//IntegerFeature">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//IntegerFeature/minValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//IntegerFeature/maxValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//IntegerFeature/step"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//IntegerFeature/value"/>
+    </genClasses>
+    <genClasses ecoreClass="assignment6_model.ecore#//Dependency">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//Dependency/not"/>
+    </genClasses>
+    <genClasses ecoreClass="assignment6_model.ecore#//UnaryDependency"/>
+    <genClasses ecoreClass="assignment6_model.ecore#//BinaryDependency">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//BinaryDependency/rightHand"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//BinaryDependency/leftHand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//BinaryDependency/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="assignment6_model.ecore#//IsSelectedDependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//IsSelectedDependency/target"/>
+    </genClasses>
+    <genClasses ecoreClass="assignment6_model.ecore#//IntegerValueDependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference assignment6_model.ecore#//IntegerValueDependency/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute assignment6_model.ecore#//IntegerValueDependency/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
