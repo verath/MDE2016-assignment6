@@ -34,19 +34,11 @@ Inside the Eclipse Modeling Tools, install the following components
 - EcoreTools
 - OCLTools
  
-### Generate Code
+### Generate Model Code
 
-Generated code is not included in the repository and must be generated.
-
-#### Model code
+Generated model code is not included in the repository and must be generated.
 Model code is generated via the coresponding .genmodel file. To generate
 the code, open the .genmodel, right click the top-level element and select
 "Generate Model Code". This is should be done for:
   - `assignment6_model/model/assignment6_model.genmodel`
   - `assignment6_requirement_model/model/req_spec.genmodel`
-
-#### Xtext code
-Xtext generates code as the .mwe2 file is run. This is done by right clicking 
-the file and selecting "Run As" -> "MWE2 Workflow". This should be done for:
-  - `/assignment6_configurator_DSL/src/org/xtext/example/assignment6/GenerateConfiguratorDSL.mwe2`
-
