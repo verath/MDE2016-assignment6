@@ -5,19 +5,17 @@
 «DEFINE main FOR Configurator»
 «FILE name + '.html'»
 
-
-
 <head>
 	<title>«name»</title>
 </head>
 
 
 <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
   
 
 <style>
-  #tab {
+  .tab {
     margin-left: 30px;
   }
 </style>
@@ -44,9 +42,9 @@ $(function() {
         $('#result').text(txt, null, 4);
         var recipe =  window.open('','RecipeWindow','width=600,height=600');
         var html = '<html><head><title>Result Window</title></head><body><div>' + txt + '</div></body></html>';
-    recipe.document.open();
-    recipe.document.write(html);
-    recipe.document.close();
+        recipe.document.open();
+        recipe.document.write(html);
+        recipe.document.close();
         return false;
     });
 })
@@ -62,11 +60,11 @@ $(function() {
 <form id=configurator>
 
 
-<div id=tab>
+<div class="tab">
 «EXPAND feature(name) FOREACH features»
 </div>
 
-<div id=tab>
+<div class="tab">
 «EXPAND group FOREACH groups»
 </div>
 
@@ -85,12 +83,12 @@ $(function() {
 
 «DEFINE group FOR Group»
 	«this.name»:
-	<div id=tab>
+	<div class="tab">
 	«IF this.groupType.toString() == 'XOR'»
 		«FOREACH this.features AS feature»
 			<p>«feature.name»: <input type=radio name=«this.name» id=«feature.name» value=«feature.name» «IF feature.mandatory» checked=checked «ENDIF»></p>
 			«EXPAND group FOREACH feature.groups»
-			<div id=tab>
+			<div class="tab">
 			«EXPAND feature(feature.name) FOREACH feature.features»
 			</div>	
 		«ENDFOREACH»
@@ -99,7 +97,7 @@ $(function() {
 		«FOREACH this.features AS feature»
 			<p>«feature.name»: <input type=checkbox name=«this.name» id=«feature.name» value=«feature.name» «IF feature.mandatory» checked=checked «ENDIF»></p>
 			«EXPAND group FOREACH feature.groups»
-			<div id=tab>
+			<div class="tab">
 			«EXPAND feature(feature.name) FOREACH feature.features»
 			</div>
 		«ENDFOREACH»
@@ -119,10 +117,10 @@ $(function() {
 	<p>«this.name»: <input type=checkbox name=«parent» id=«this.name» value=«this.name» «IF this.mandatory»  checked=checked «ENDIF»></p>
 
 
-	<div id=tab>
+	<div class="tab">
 	«EXPAND group FOREACH this.groups»
 	</div>
-	<div id=tab>
+	<div class="tab">
 	«EXPAND feature(this.name) FOREACH this.features»
 	</div>
 	
@@ -133,10 +131,10 @@ $(function() {
 
 	<p>«this.name»: <input type=range name=«parent» id=«this.name» value=«this.name» max=«this.maxValue» min=«this.minValue» step=«this.step»>
 
-	<div id=tab>
+	<div class="tab">
 	«EXPAND group FOREACH this.groups»
 	</div>
-	<div id=tab>
+	<div class="tab">
 	«EXPAND feature(this.name) FOREACH this.features»
 	</div>
 
