@@ -14,6 +14,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute req_spec.ecore#//RequirementsSpecification/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference req_spec.ecore#//RequirementsSpecification/category"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference req_spec.ecore#//RequirementsSpecification/person"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference req_spec.ecore#//RequirementsSpecification/feature"/>
     </genClasses>
     <genClasses image="false" ecoreClass="req_spec.ecore#//Requirement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute req_spec.ecore#//Requirement/name"/>
