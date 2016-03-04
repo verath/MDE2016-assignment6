@@ -1,0 +1,6 @@
+-- @path ReqSpec=/assignment6_requirement_model/model/req_spec.ecore
+-- @path Configurator=/assignment6_model/model/assignment6_model.ecore
+
+module configurator2reqspec;
+create ReqSpecOut : ReqSpec from ConfigIn : Configurator, ReqSpecIn : ReqSpec;
+
