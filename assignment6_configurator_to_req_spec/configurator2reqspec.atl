@@ -4,3 +4,182 @@
 module configurator2reqspec;
 create ReqSpecOut : ReqSpec from ConfigIn : Configurator, ReqSpecIn : ReqSpec;
 
+--- Returns the corresponding person of the out model from a person
+--- in the input model
+helper context ReqSpec!Person def : outPerson : ReqSpec!Person =
+	ReqSpec!Person.allInstancesFrom('ReqSpecOut')
+		->select(p | p.firstName = self.firstName and p.lastName = self.lastName)
+		->first();
+
+--- Returns the containing (source) requirement of an expression object
+helper context ReqSpec!Expression def : sourceRequirement : ReqSpec!Requirement =
+	let composite : OclAny = self.refImmediateComposite() in
+	if composite.oclIsKindOf(ReqSpec!Requires) then
+		-- If it is a Requires instance we know that its composite should be the requirement
+		composite.refImmediateComposite()
+	else
+		-- If not, assume it is an Expression and move another step "upwards" in the tree
+		composite.sourceRequirement
+	endif;
+
+--- Returns a sequence of all features that reference the requirement
+helper context ReqSpec!Requirement def : featuresReferencedBy : Sequence(Configurator!Feature) =
+	let featureNames : Sequence(String) =
+		ReqSpec!Feature.allInstancesFrom('ReqSpecIn')
+			->select(f | f.requirements->includes(self))
+			->collect(f | f.name)
+	in
+	Configurator!Feature.allInstancesFrom('ConfigIn')
+		->select(f | featureNames->includes(f.name));
+
+--- Returns a sequence of all features referenced by the requirement
+helper context ReqSpec!Requirement def : referencedFeatures : Sequence(Configurator!Feature) =
+	let featureNames : Sequence(String) =
+		self.features->collect(f | f.name)
+	in
+	Configurator!Feature.allInstancesFrom('ConfigIn')
+		->select(f | featureNames->includes(f.name));
+
+--- Returns a sequence of all requirements that depends on the current requirement
+helper context ReqSpec!Requirement def : dependantRequirements : Sequence(ReqSpec!Requirement) =
+	ReqSpec!UnaryExpression.allInstancesFrom('ReqSpecIn')
+		->select(d | d.requirement = self)
+		->collect(d | d.sourceRequirement);
+
+--- Checks if a requirement should be created.
+--- A requirement should be created if:
+--- * The requirement is mandatory
+--- * A mandatory/selected feature references the requirement
+--- * A mandatory/selected feature is referenced by the requirement
+--- * A requirement that depends on this requirment should be created
+helper context ReqSpec!Requirement def : shouldCreate() : Boolean =
+	self.isMandatory
+	or
+	self.referencedFeatures
+		->union(self.featuresReferencedBy)
+		->select(f | f.selected or f.mandatory)
+		->size() > 0
+	or
+	self.dependantRequirements->exists(r | r.shouldCreate());
+
+
+--- Checks if a category should be created.
+--- A category should be created if:
+--- * Any of the category's requirements should be created
+--- * Any of the sub-categories of the category should be created.
+helper context ReqSpec!Category def : shouldCreate() : Boolean =
+	self.requirement->exists(r | r.shouldCreate())
+	or
+	self.subcategory->exists(c | c.shouldCreate());
+
+
+--- Checks if a person should be created.
+--- A person should be created if:
+--- * Any of the categories the person is responsible for should be created
+--- * Any of the requirements the person is responsible for should be created
+helper context ReqSpec!Person def : shouldCreate() : Boolean =
+	self.catResponsibility->exists(c | c.shouldCreate())
+	or
+	self.reqResponsibility->exists(r | r.shouldCreate());
+
+
+helper def : Description2Description(description : ReqSpec!Description) : ReqSpec!Description =
+	if description <> OclUndefined then
+		thisModule._Description2Description(description)
+	else
+		OclUndefined
+	endif;
+
+helper def : Requirement2Requirement(requirement : ReqSpec!Requirement) : ReqSpec!Requirement =
+	if requirement.oclIsKindOf(ReqSpec!FunctionalRequirement) then
+		thisModule.FR2FR(requirement)
+	else
+		if requirement.oclIsKindOf(ReqSpec!QualityRequirement) then
+			thisModule.QR2QR(requirement)
+		else
+			OclUndefined
+		endif
+	endif;
+
+
+lazy rule _Description2Description {
+	from description : ReqSpec!Description
+	to descriptionOut : ReqSpec!Description(
+		descriptionText <- description.descriptionText
+	)
+}
+
+lazy rule FR2FR {
+	from requirement : ReqSpec!FunctionalRequirement
+	to requirementOut : ReqSpec!FunctionalRequirement(
+		description <- thisModule.Description2Description(requirement.description),
+		id <- requirement.id,
+		isMandatory <- requirement.isMandatory,
+		name <- requirement.name,
+		priority <- requirement.priority,
+		responsible <- requirement.responsible->collect(p | p.outPerson)
+	)
+	do {
+		for(person in requirementOut.responsible) {
+			person.reqResponsibility <- person.reqResponsibility.append(requirementOut);
+		}
+	}
+}
+
+lazy rule QR2QR {
+	from requirement : ReqSpec!QualityRequirement
+	to requirementOut : ReqSpec!QualityRequirement(
+		description <- thisModule.Description2Description(requirement.description),
+		id <- requirement.id,
+		isMandatory <- requirement.isMandatory,
+		name <- requirement.name,
+		priority <- requirement.priority,
+		responsible <- requirement.responsible->collect(p | p.outPerson)
+	)
+	do {
+		for(person in requirementOut.responsible) {
+			person.reqResponsibility <- person.reqResponsibility.append(requirementOut);
+		}
+	}
+}
+
+lazy rule Category2Category {
+	from category : ReqSpec!Category
+	to categoryOut : ReqSpec!Category (
+		categoryName <- category.categoryName,
+		requirement <- category.requirement
+			->select(r | r.shouldCreate())
+			->collect(r | thisModule.Requirement2Requirement(r)),
+		subcategory <- category.subcategory
+			->select(c | c.shouldCreate())
+			->collect(c | thisModule.Category2Category(c)),
+		responsible <- category.responsible->collect(p | p.outPerson)
+	)
+	do {
+		for(person in categoryOut.responsible) {
+			person.catResponsibility <- person.catResponsibility.append(categoryOut);
+		}
+	}
+}
+
+lazy rule Person2Person {
+	from person : ReqSpec!Person
+	to personOut : ReqSpec!Person(
+		firstName <- person.firstName,
+		lastName <- person.lastName
+	)
+}
+
+-- Entry point
+rule ReqSpec2ReqSpec {
+	from reqSpec : ReqSpec!RequirementsSpecification
+	to reqSpecOut : ReqSpec!RequirementsSpecification(
+		name <- reqSpec.name,
+		person <- reqSpec.person
+			->select(p | p.shouldCreate())
+			->collect(p | thisModule.Person2Person(p)),
+		category <- reqSpec.category
+			->select(c | c.shouldCreate())
+			->collect(c | thisModule.Category2Category(c))
+	)
+}
