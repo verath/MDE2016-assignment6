@@ -2,6 +2,7 @@ package se.chalmers.mde2016.group4.editor;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 
 import assignment6_model.Configurator;
