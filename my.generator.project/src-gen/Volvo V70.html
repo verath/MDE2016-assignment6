@@ -1,18 +1,18 @@
 
 
-
-
 <head>
 	<title>Volvo V70</title>
 </head>
 
 
-<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+
   
 
 <style>
-  #tab {
+  .tab {
     margin-left: 30px;
   }
 </style>
@@ -39,15 +39,24 @@ $(function() {
         $('#result').text(txt, null, 4);
         var recipe =  window.open('','RecipeWindow','width=600,height=600');
         var html = '<html><head><title>Result Window</title></head><body><div>' + txt + '</div></body></html>';
-    recipe.document.open();
-    recipe.document.write(html);
-    recipe.document.close();
+        recipe.document.open();
+        recipe.document.write(html);
+        recipe.document.close();
         return false;
     });
 })
 
-</script>
 
+
+function isSelected(id) {
+	if (document.getElementById(id)) {
+		return document.getElementById(id).checked && !document.getElementById(id).disabled;	
+	}
+	return true;
+	
+}
+
+</script>
 
 
 
@@ -57,211 +66,637 @@ $(function() {
 <form id=configurator>
 
 
-<div id=tab>
+<div class="tab">
 
 	
-	<p>Engine: <input type=checkbox name=Volvo V70 id=Engine value=Engine   checked=checked ></p>
-
-
-	<div id=tab>
+	<label><p>Engine: <input type=checkbox name='Volvo V70' id='Engine' value='Engine'  checked=checked ></p></label>
+	
+	<div class="tab">
 	
 	Motor:
-	<div id=tab>
+	<div class="tab">
 	
-		
-			<p>Disel: <input type=radio name=Motor id=Disel value=Disel ></p>
-			
-	zxc:
-	<div id=tab>
 	
-		
-			<p>D3 (150HP): <input type=radio name=zxc id=D3 (150HP) value=D3 (150HP) ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-			<p>D4 (181HP): <input type=radio name=zxc id=D4 (181HP) value=D4 (181HP) ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-			<p>D4 AWD (181HP): <input type=radio name=zxc id=D4 AWD (181HP) value=D4 AWD (181HP) ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-		
-		
-	</div>
-
-			<div id=tab>
-			
-			</div>	
-		
-			<p>Gas: <input type=radio name=Motor id=Gas value=Gas ></p>
-			
-			<div id=tab>
-			
+	<label><p>Disel: <input type=radio name='Motor' id='Disel' value='Disel' ></p></label>
 	
-	<p>T4 (190HP): <input type=checkbox name=Gas id=T4 (190HP) value=T4 (190HP)   checked=checked ></p>
-
-
-	<div id=tab>
+	<div class="tab">
+	
+	engine type:
+	<div class="tab">
+	
+	
+	<label><p>D3 (150HP): <input type=radio name='engine type' id='D3-150HP' value='D3 (150HP)' ></p></label>
+	
+	<div class="tab">
 	
 	</div>
-	<div id=tab>
+	<div class="tab">
 	
 	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('engine-type')) {
+				document.getElementById('D3-150HP').removeAttribute('disabled');
+			} else {
+				document.getElementById('D3-150HP').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
 	
 
-			</div>	
-		
-			<p>Alternative Options: <input type=radio name=Motor id=Alternative Options value=Alternative Options ></p>
-			
-			<div id=tab>
-			
 	
-	<p>Bi-Fuel (245HP): <input type=checkbox name=Alternative Options id=Bi-Fuel (245HP) value=Bi-Fuel (245HP)   checked=checked ></p>
-
-
-	<div id=tab>
+	<label><p>D4 (181HP): <input type=radio name='engine type' id='D4-181HP' value='D4 (181HP)' ></p></label>
+	
+	<div class="tab">
 	
 	</div>
-	<div id=tab>
+	<div class="tab">
 	
 	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('engine-type')) {
+				document.getElementById('D4-181HP').removeAttribute('disabled');
+			} else {
+				document.getElementById('D4-181HP').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
 	
 
-			</div>	
-		
-		
-		
+	
+	<label><p>D4 AWD (181HP): <input type=radio name='engine type' id='D4-AWD-181HP' value='D4 AWD (181HP)' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('engine-type')) {
+				document.getElementById('D4-AWD-181HP').removeAttribute('disabled');
+			} else {
+				document.getElementById('D4-AWD-181HP').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	</div>
+
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Motor')) {
+				document.getElementById('Disel').removeAttribute('disabled');
+			} else {
+				document.getElementById('Disel').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	
+	<label><p>Gas: <input type=radio name='Motor' id='Gas' value='Gas' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	
+	<label><p>T4 (190HP): <input type=checkbox name='Gas' id='T4-190HP' value='T4 (190HP)'  checked=checked ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Gas')) {
+				document.getElementById('T4-190HP').removeAttribute('disabled');
+			} else {
+				document.getElementById('T4-190HP').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Motor')) {
+				document.getElementById('Gas').removeAttribute('disabled');
+			} else {
+				document.getElementById('Gas').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	
+	<label><p>Alternative Options: <input type=radio name='Motor' id='Alternative-Options' value='Alternative Options' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	
+	<label><p>Bi-Fuel (245HP): <input type=checkbox name='Alternative Options' id='Bi-Fuel-245HP' value='Bi-Fuel (245HP)'  checked=checked ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Alternative-Options')) {
+				document.getElementById('Bi-Fuel-245HP').removeAttribute('disabled');
+			} else {
+				document.getElementById('Bi-Fuel-245HP').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Motor')) {
+				document.getElementById('Alternative-Options').removeAttribute('disabled');
+			} else {
+				document.getElementById('Alternative-Options').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
 	</div>
 
 	Transmission:
-	<div id=tab>
+	<div class="tab">
 	
-		
-			<p>Six geard manual transmission: <input type=radio name=Transmission id=Six geard manual transmission value=Six geard manual transmission ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-			<p>Six geard Geartronic automatic transmission: <input type=radio name=Transmission id=Six geard Geartronic automatic transmission value=Six geard Geartronic automatic transmission ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-			<p>Eight geard Automatic: <input type=radio name=Transmission id=Eight geard Automatic value=Eight geard Automatic ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-		
-		
+	
+	<label><p>Six geard manual transmission: <input type=radio name='Transmission' id='Six-geard-manual-transmission' value='Six geard manual transmission' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if(((isSelected('D3-150HP') || isSelected('D4-181HP')) || isSelected('T4-190HP')) &&  isSelected('Transmission')) {
+				document.getElementById('Six-geard-manual-transmission').removeAttribute('disabled');
+			} else {
+				document.getElementById('Six-geard-manual-transmission').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	
+	<label><p>Six geard Geartronic automatic transmission: <input type=radio name='Transmission' id='Six-geard-Geartronic-automatic-transmission' value='Six geard Geartronic automatic transmission' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if(((isSelected('D3-150HP') || isSelected('D4-AWD-181HP')) || isSelected('T4-190HP')) &&  isSelected('Transmission')) {
+				document.getElementById('Six-geard-Geartronic-automatic-transmission').removeAttribute('disabled');
+			} else {
+				document.getElementById('Six-geard-Geartronic-automatic-transmission').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	
+	<label><p>Eight geard Automatic: <input type=radio name='Transmission' id='Eight-geard-Automatic' value='Eight geard Automatic' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if((isSelected('D4-181HP') || isSelected('Bi-Fuel-245HP')) &&  isSelected('Transmission')) {
+				document.getElementById('Eight-geard-Automatic').removeAttribute('disabled');
+			} else {
+				document.getElementById('Eight-geard-Automatic').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
 	</div>
 
 	</div>
-	<div id=tab>
+	<div class="tab">
 	
 	
-	<p>Polestar Performance: <input type=checkbox name=Engine id=Polestar Performance value=Polestar Performance ></p>
-
-
-	<div id=tab>
+	<label><p>Polestar Performance: <input type=checkbox name='Engine' id='Polestar-Performance' value='Polestar Performance' ></p></label>
 	
-	</div>
-	<div id=tab>
+	<div class="tab">
 	
 	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Engine')) {
+				document.getElementById('Polestar-Performance').removeAttribute('disabled');
+			} else {
+				document.getElementById('Polestar-Performance').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
 	
 
 	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Volvo-V70')) {
+				document.getElementById('Engine').removeAttribute('disabled');
+			} else {
+				document.getElementById('Engine').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
 	
 
 	
-	<p>Equipment: <input type=checkbox name=Volvo V70 id=Equipment value=Equipment ></p>
-
-
-	<div id=tab>
+	<label><p>Equipment: <input type=checkbox name='Volvo V70' id='Equipment' value='Equipment' ></p></label>
+	
+	<div class="tab">
 	
 	Equipment Level:
-	<div id=tab>
+	<div class="tab">
 	
-		
-			<p>Classic momentum: <input type=radio name=Equipment Level id=Classic momentum value=Classic momentum ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-			<p>Classic summum: <input type=radio name=Equipment Level id=Classic summum value=Classic summum ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-			<p>Classic Sport: <input type=radio name=Equipment Level id=Classic Sport value=Classic Sport ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-			<p>Classic kinetic: <input type=radio name=Equipment Level id=Classic kinetic value=Classic kinetic ></p>
-			
-			<div id=tab>
-			
-			</div>	
-		
-		
-		
+	
+	<label><p>Classic momentum: <input type=radio name='Equipment Level' id='Classic-momentum' value='Classic momentum' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Equipment-Level')) {
+				document.getElementById('Classic-momentum').removeAttribute('disabled');
+			} else {
+				document.getElementById('Classic-momentum').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	
+	<label><p>Classic summum: <input type=radio name='Equipment Level' id='Classic-summum' value='Classic summum' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Equipment-Level')) {
+				document.getElementById('Classic-summum').removeAttribute('disabled');
+			} else {
+				document.getElementById('Classic-summum').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	
+	<label><p>Classic Sport: <input type=radio name='Equipment Level' id='Classic-Sport' value='Classic Sport' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Equipment-Level')) {
+				document.getElementById('Classic-Sport').removeAttribute('disabled');
+			} else {
+				document.getElementById('Classic-Sport').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
+	
+	<label><p>Classic kinetic: <input type=radio name='Equipment Level' id='Classic-kinetic' value='Classic kinetic' ></p></label>
+	
+	<div class="tab">
+	
+	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Equipment-Level')) {
+				document.getElementById('Classic-kinetic').removeAttribute('disabled');
+			} else {
+				document.getElementById('Classic-kinetic').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+
 	</div>
 
 	</div>
-	<div id=tab>
+	<div class="tab">
 	
 	
-	<p>Technical package pro: <input type=checkbox name=Equipment id=Technical package pro value=Technical package pro ></p>
-
-
-	<div id=tab>
+	<label><p>Technical package pro: <input type=checkbox name='Equipment' id='Technical-package-pro' value='Technical package pro' ></p></label>
 	
-	</div>
-	<div id=tab>
+	<div class="tab">
 	
 	</div>
+	<div class="tab">
+	
+	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Equipment')) {
+				document.getElementById('Technical-package-pro').removeAttribute('disabled');
+			} else {
+				document.getElementById('Technical-package-pro').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
 	
 
 	</div>
+
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if( isSelected('Volvo-V70')) {
+				document.getElementById('Equipment').removeAttribute('disabled');
+			} else {
+				document.getElementById('Equipment').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
 	
 
-
-	<p>HORSEPOWAH!: <input type=range name=Volvo V70 id=HORSEPOWAH! value=HORSEPOWAH! max=1000 min=100 step=100>
-
-	<div id=tab>
+	<p><label>HORSEPOWAH!: <input type=range name='Volvo V70' id='HORSEPOWAH!' value='HORSEPOWAH!' max=1000 min=100 step=100></label></p>
+	
+	<div class="tab">
 	
 	</div>
-	<div id=tab>
+	<div class="tab">
 	
 	</div>
 
 
 </div>
 
-<div id=tab>
+<div class="tab">
 
 </div>
 
-<input type="submit" title="Send">
+
+
+<input type="submit" title="Send" name='form'>
 
 </form>
-
-
 
 

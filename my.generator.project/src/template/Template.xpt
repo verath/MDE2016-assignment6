@@ -1,17 +1,19 @@
-«IMPORT assignment6_model»
+Â«IMPORT assignment6_modelÂ»
 
-«EXTENSION template::GeneratorExtensions»
+Â«EXTENSION template::GeneratorExtensionsÂ»
 
-«DEFINE main FOR Configurator»
-«FILE name + '.html'»
+Â«DEFINE main FOR ConfiguratorÂ»
+Â«FILE name + '.html'Â»
 
 <head>
-	<title>«name»</title>
+	<title>Â«nameÂ»</title>
 </head>
 
 
-<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+
   
 
 <style>
@@ -49,96 +51,124 @@ $(function() {
     });
 })
 
+
+
+function isSelected(id) {
+	if (document.getElementById(id)) {
+		return document.getElementById(id).checked && !document.getElementById(id).disabled;	
+	}
+	return true;
+	
+}
+
 </script>
 
+Â«REMÂ»Content:Â«ENDREMÂ»
 
 
-«REM»Content:«ENDREM»
-
-<h1>Configurator «name» </h1>
+<h1>Configurator Â«nameÂ» </h1>
 
 <form id=configurator>
 
 
 <div class="tab">
-«EXPAND feature(name) FOREACH features»
+Â«EXPAND feature(name, false) FOREACH featuresÂ»
 </div>
 
 <div class="tab">
-«EXPAND group FOREACH groups»
+Â«EXPAND group(name) FOREACH groupsÂ»
 </div>
 
-<input type="submit" title="Send">
+
+
+<input type="submit" title="Send" name='form'>
 
 </form>
 
 
+Â«ENDFILEÂ»
 
 
-«ENDFILE»
+Â«ENDDEFINEÂ»
 
 
-«ENDDEFINE»
-
-
-«DEFINE group FOR Group»
-	«this.name»:
+Â«DEFINE group(String parent) FOR GroupÂ»
+	Â«this.nameÂ»:
 	<div class="tab">
-	«IF this.groupType.toString() == 'XOR'»
-		«FOREACH this.features AS feature»
-			<p>«feature.name»: <input type=radio name=«this.name» id=«feature.name» value=«feature.name» «IF feature.mandatory» checked=checked «ENDIF»></p>
-			«EXPAND group FOREACH feature.groups»
-			<div class="tab">
-			«EXPAND feature(feature.name) FOREACH feature.features»
-			</div>	
-		«ENDFOREACH»
-		
-		«ELSE»
-		«FOREACH this.features AS feature»
-			<p>«feature.name»: <input type=checkbox name=«this.name» id=«feature.name» value=«feature.name» «IF feature.mandatory» checked=checked «ENDIF»></p>
-			«EXPAND group FOREACH feature.groups»
-			<div class="tab">
-			«EXPAND feature(feature.name) FOREACH feature.features»
-			</div>
-		«ENDFOREACH»
-	«ENDIF»
+	Â«EXPAND feature(this.name, groupType.toString() == 'XOR') FOREACH featuresÂ»
 	</div>
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
 
 
 
-«DEFINE feature(String parent) FOR Feature»
-«ERROR "Should not happen"»
-«ENDDEFINE»
+Â«DEFINE feature(String parent, Boolean isXor) FOR FeatureÂ»
+Â«ERROR "Should not happen"Â»
+Â«ENDDEFINEÂ»
 
-«REM»Simple Feature:«ENDREM»
-«DEFINE feature(String parent) FOR SimpleFeature»
+Â«REMÂ»Simple Feature:Â«ENDREMÂ»
+Â«DEFINE feature(String parent, Boolean isXor) FOR SimpleFeatureÂ»
 	
-	<p>«this.name»: <input type=checkbox name=«parent» id=«this.name» value=«this.name» «IF this.mandatory»  checked=checked «ENDIF»></p>
-
-
-	<div class="tab">
-	«EXPAND group FOREACH this.groups»
-	</div>
-	<div class="tab">
-	«EXPAND feature(this.name) FOREACH this.features»
-	</div>
+	<label><p>Â«this.nameÂ»: <input type=Â«IF isXorÂ»radioÂ«ELSEÂ»checkboxÂ«ENDIFÂ» name='Â«parentÂ»' id='Â«EXPAND getID FOR this.nameÂ»' value='Â«this.nameÂ»' Â«IF mandatoryÂ» checked=checked Â«ENDIFÂ»></p></label>
 	
-«ENDDEFINE»
-
-«REM»Integer Feature«ENDREM»
-«DEFINE feature(String parent) FOR IntegerFeature»
-
-	<p>«this.name»: <input type=range name=«parent» id=«this.name» value=«this.name» max=«this.maxValue» min=«this.minValue» step=«this.step»>
-
 	<div class="tab">
-	«EXPAND group FOREACH this.groups»
+	Â«EXPAND group(name) FOREACH this.groupsÂ»
 	</div>
 	<div class="tab">
-	«EXPAND feature(this.name) FOREACH this.features»
+	Â«EXPAND feature(this.name, false) FOREACH this.featuresÂ»
 	</div>
 
-«ENDDEFINE»
+	
+	<script>
+	$(document).ready(function() {
+	
+		var fun = function() {
+			if(Â«IF dependencies.size> 0Â»Â«EXPAND functionFormat FOREACH dependenciesÂ» && Â«ENDIFÂ» isSelected('Â«EXPAND getID FOR parentÂ»')) {
+				document.getElementById('Â«EXPAND getID FOR nameÂ»').removeAttribute('disabled');
+			} else {
+				document.getElementById('Â«EXPAND getID FOR nameÂ»').setAttribute('disabled', 'disabled');
+			}
+		};
+		var x = document.getElementsByTagName('input');
+		var i;
+		for (i = 0; i < x.length; i++) {
+	    	x[i].addEventListener('change', fun);
+		}
+		fun();
+	});
+	</script>
+	
+Â«ENDDEFINEÂ»
+
+Â«REMÂ»Integer FeatureÂ«ENDREMÂ»
+Â«DEFINE feature(String parent, Boolean isXor) FOR IntegerFeatureÂ»
+	<p><label>Â«this.nameÂ»: <input type=range name='Â«parentÂ»' id='Â«EXPAND getID FOR this.nameÂ»' value='Â«this.nameÂ»' max=Â«this.maxValueÂ» min=Â«this.minValueÂ» step=Â«this.stepÂ»></label></p>
+	
+	<div class="tab">
+	Â«EXPAND group(name) FOREACH this.groupsÂ»
+	</div>
+	<div class="tab">
+	Â«EXPAND feature(this.name, false) FOREACH this.featuresÂ»
+	</div>
+
+Â«ENDDEFINEÂ»
+
+Â«DEFINE getID FOR String-Â»	
+Â«this.replaceAll(" ","-").replaceAll("\\)","").replaceAll("\\(","")-Â»
+Â«ENDDEFINE-Â»
+
+
+Â«DEFINE prettyPrint FOR DependencyÂ»	Â«ENDDEFINEÂ»
+Â«DEFINE prettyPrint FOR UnaryDependencyÂ»Â«EXPAND prettyPrint FOR thisÂ»Â«ENDDEFINEÂ»
+Â«DEFINE prettyPrint FOR BinaryDependency-Â»(Â«EXPAND prettyPrint FOR leftHandÂ» Â«operatorÂ» Â«EXPAND prettyPrint FOR rightHandÂ»)Â«ENDDEFINEÂ»
+Â«DEFINE prettyPrint FOR IsSelectedDependencyÂ»Â«this.target.nameÂ» IS Â«IF notÂ»NOT Â«ENDIFÂ»SELECTEDÂ«ENDDEFINEÂ»
+Â«DEFINE prettyPrint FOR IntegerValueDependencyÂ»Â«target.nameÂ»Â«IF notÂ»!Â«ENDIFÂ»=Â«this.valueÂ»Â«ENDDEFINEÂ»
+
+
+Â«DEFINE functionFormat FOR DependencyÂ»	Â«ENDDEFINEÂ»
+Â«DEFINE functionFormat FOR UnaryDependencyÂ»Â«EXPAND functionFormat FOR thisÂ»Â«ENDDEFINEÂ»
+Â«DEFINE functionFormat FOR BinaryDependency-Â»(Â«EXPAND functionFormat FOR leftHandÂ» Â«IF operator.toString() == 'OR'Â»||Â«ELSEIF operator.toString()=='AND'Â»&&Â«ENDIFÂ» Â«EXPAND functionFormat FOR rightHandÂ»)Â«ENDDEFINEÂ»
+Â«DEFINE functionFormat FOR IsSelectedDependencyÂ»Â«IF notÂ»!Â«ENDIFÂ»isSelected('Â«EXPAND getID FOR this.target.nameÂ»')Â«ENDDEFINEÂ»
+Â«DEFINE functionFormat FOR IntegerValueDependencyÂ»Â«target.nameÂ»Â«IF notÂ»!Â«ELSEÂ»=Â«ENDIFÂ»=Â«this.valueÂ»Â«ENDDEFINEÂ»
 
 
 

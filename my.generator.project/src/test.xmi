@@ -4,7 +4,7 @@
     <features xsi:type="assignment6_model:SimpleFeature" name="Polestar Performance"/>
     <groups name="Motor" groupType="XOR">
       <features name="Disel">
-        <groups name="zxc" groupType="XOR">
+        <groups name="engine type" groupType="XOR">
           <features name="D3 (150HP)"/>
           <features name="D4 (181HP)"/>
           <features name="D4 AWD (181HP)"/>
