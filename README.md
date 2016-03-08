@@ -34,11 +34,3 @@ Inside the Eclipse Modeling Tools, install the following components
 - EcoreTools
 - OCLTools
  
-### Generate Model Code
-
-Generated model code is not included in the repository and must be generated.
-Model code is generated via the coresponding .genmodel file. To generate
-the code, open the .genmodel, right click the top-level element and select
-"Generate Model Code". This is should be done for:
-  - `assignment6_model/model/assignment6_model.genmodel`
-  - `assignment6_requirement_model/model/req_spec.genmodel`
